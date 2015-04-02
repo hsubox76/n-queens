@@ -67,11 +67,8 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  if (n === 0) {
-    return [];
-  }
-  if (n === 1) {
-    return [[1]];
+  if (n === 0 && n === 1) {
+    return 0;
   }
 
   var blockedCols = {};
@@ -80,6 +77,7 @@ window.findNQueensSolution = function(n) {
 
   var addQueen = function (row, n) {
     var currentPlacement;
+    var successes = 0;
     for (var col = 0; col < n; col++) {
 
       if (!(col in blockedCols)) {
@@ -101,7 +99,7 @@ window.findNQueensSolution = function(n) {
         solutionBoard.togglePiece(row, col);
         delete blockedCols[col];
       }
-      
+
     }
 
     if (row === 0) {
@@ -116,10 +114,7 @@ window.findNQueensSolution = function(n) {
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
   if (n === 0) {
-    return [];
-  }
-  if (n === 1) {
-    return [[1]];
+    return 1;
   }
 
   var blockedCols = {};
@@ -128,6 +123,7 @@ window.countNQueensSolutions = function(n) {
 
   var addQueen = function (row, n) {
     var currentPlacement;
+    var successes = 0;
     for (var col = 0; col < n; col++) {
 
       if (!(col in blockedCols)) {
@@ -137,12 +133,9 @@ window.countNQueensSolutions = function(n) {
 
         if (!solutionBoard.hasAnyBishopConflictsOn(row, col)) {
           if (row === n-1) {
-            return solutionBoard.rows();
+            successes = 1;
           } else {
-            var result = addQueen(row+1, n);
-            if (result) {
-              return result;
-            }
+            successes = successes + addQueen(row+1, n);
           }
         }
 
@@ -151,10 +144,7 @@ window.countNQueensSolutions = function(n) {
       }
       
     }
-
-    if (row === 0) {
-      return solutionBoard.rows();
-    }
+    return successes;
   };
 
   return addQueen(0, n);
