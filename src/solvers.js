@@ -67,36 +67,95 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  if (n === 0 || n === 2 || n == 3) {
+  if (n === 0) {
     return [];
   }
   if (n === 1) {
     return [[1]];
   }
 
-  //iterate first row
-    //toggle position
-    //if ! hasAnyQueenConflictsOn
-      //if last piece - return 1;
-      //else iterate next
-    //untoggle
+  var blockedCols = {};
 
+  var solutionBoard = new Board({n: n});
 
-  
+  var addQueen = function (row, n) {
+    var currentPlacement;
+    for (var col = 0; col < n; col++) {
 
+      if (!(col in blockedCols)) {
+        solutionBoard.togglePiece(row, col);
+        currentPlacement = [row, col];
+        blockedCols[col] = true;
 
+        if (!solutionBoard.hasAnyBishopConflictsOn(row, col)) {
+          if (row === n-1) {
+            return solutionBoard.rows();
+          } else {
+            var result = addQueen(row+1, n);
+            if (result) {
+              return result;
+            }
+          }
+        }
 
+        solutionBoard.togglePiece(row, col);
+        delete blockedCols[col];
+      }
+      
+    }
 
-  //console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  // just a placeholder to see where it's erroring
-  return n;
+    if (row === 0) {
+      return solutionBoard.rows();
+    }
+  };
+
+  return addQueen(0, n);
 };
 
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  if (n === 0) {
+    return [];
+  }
+  if (n === 1) {
+    return [[1]];
+  }
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
-  return solutionCount;
+  var blockedCols = {};
+
+  var solutionBoard = new Board({n: n});
+
+  var addQueen = function (row, n) {
+    var currentPlacement;
+    for (var col = 0; col < n; col++) {
+
+      if (!(col in blockedCols)) {
+        solutionBoard.togglePiece(row, col);
+        currentPlacement = [row, col];
+        blockedCols[col] = true;
+
+        if (!solutionBoard.hasAnyBishopConflictsOn(row, col)) {
+          if (row === n-1) {
+            return solutionBoard.rows();
+          } else {
+            var result = addQueen(row+1, n);
+            if (result) {
+              return result;
+            }
+          }
+        }
+
+        solutionBoard.togglePiece(row, col);
+        delete blockedCols[col];
+      }
+      
+    }
+
+    if (row === 0) {
+      return solutionBoard.rows();
+    }
+  };
+
+  return addQueen(0, n);
 };
