@@ -24,20 +24,9 @@ window.findNRooksSolution = function(n) {
   return solution.rows();
 };
 
-  // how to copy board
-  // var newBoard = new Board(oldBoard(rows()));
-
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  //make two nxn matrix  // solutionBoard and blockedSpaces
-  //iterate first row
-    //if space not blocked
-      //place piece
-      //store place piece postion
-      //block board
-    //check if final piece
-      //iterate next row
 
   var addRook = function (row, n) {
     var currentPlacement;
@@ -67,16 +56,8 @@ window.countNRooksSolutions = function(n) {
   });
 
   var blockedCols = {};
-  // _.range(n).map(function() {
-  //     return _.range(n).map(function() {
-  //       return 0;
-  //     });
-  // });
 
   var solutionCount = addRook(0, n);
-
-
-  
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
