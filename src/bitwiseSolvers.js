@@ -114,6 +114,36 @@ window.countNQueensSolutions = function(n) {
 
   var blockedCols = {};
 
+  
+  // var array of queen positions (row, col)
+    // array[0] = 00010000
+    // array[1] = 00000100
+  // var qpr0 = queen position row 0
+  // find mask
+    // colMask = array[0] | array[1] | array[...]
+      // 00010100
+    // diagonal mask
+      // (array[i] << current row) & (array[i] >> current row)
+        // diagMask = 0;
+        // diagMask = diagMask | (array[0] << 7) | (array[0] >> 7)
+        // diagMask = diagMask | (array[1] << 6) | (array[1] >> 6)
+          // 00100000 | 00001000
+            // 00101000
+    // colMask | diagMask
+      // 00111100
+    // attemptedQueenPlacement = 1;
+    // if(!(attemptedQueenPlacement & totalMask))
+      //valid placement!
+      //array.push(attemptedQueenPlacement)
+      //next row
+    // else
+      //while attemptedQueenPlacement < 10000000
+        //attemptedQueenPlacement << 1
+        //test again
+
+
+
+
   var solutionBoard = new Board({n: n});
 
   var addQueen = function (row, n) {
