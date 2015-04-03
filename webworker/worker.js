@@ -7,13 +7,13 @@ onmessage = function(e) {
   self.solutionBoard = new Board({n: n});
   self.blockedCols = {};
 
-  var count = addQueen(0,n,start);
+  addQueen(0,n,start);
 
   //console.log(self.solutionBoard.rows());
   // console.log('Message received from main script');
   // var workerResult = 'Result: ' + (e.data[0] * e.data[1]);
   // console.log('Posting message back to main script');
-  postMessage(count);
+  
 }
 
 
@@ -35,6 +35,9 @@ function addQueen(row, n, startingCol) {
           successes = 1;
         } else {
           successes = successes + addQueen(row+1, n);
+          if(row === 1) {
+            postMessage({percentage: (col+1)/n*100})
+          }
         }
       }
 
@@ -45,5 +48,10 @@ function addQueen(row, n, startingCol) {
       col = n;
     }
   }
-  return successes;
+
+  if (startingCol !== undefined) {
+    postMessage({total: successes, percentage: 100})
+  } else {
+    return successes;
+  }
 };

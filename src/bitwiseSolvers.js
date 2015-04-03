@@ -114,6 +114,7 @@ window.countNQueensSolutions = function(n) {
 
   var blockedCols = {};
 
+
   
   // var array of queen positions (row, col)
     // array[0] = 00010000
@@ -123,7 +124,7 @@ window.countNQueensSolutions = function(n) {
     // colMask = array[0] | array[1] | array[...]
       // 00010100
     // diagonal mask
-      // (array[i] << current row) & (array[i] >> current row)
+      // (array[i] << current row) | (array[i] >> current row)
         // diagMask = 0;
         // diagMask = diagMask | (array[0] << 7) | (array[0] >> 7)
         // diagMask = diagMask | (array[1] << 6) | (array[1] >> 6)

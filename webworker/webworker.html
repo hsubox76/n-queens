@@ -5,37 +5,39 @@
     <link rel="stylesheet" href="styles.css">
 
     <!-- source files -->
-    <script src="lib/jquery-1.8.3.js"></script>
+    <script src="../lib/jquery-1.8.3.js"></script>
     <script src="master.js"></script>
   </head>
   <body>
     <header>
       <h1>n-Queens Solution Through Web Worker Distribution</h1>
     </header>
-    <section class="userInput">
-      <div class="form">
-        <form class="userInput">
-          <label>
-            <span class="n-label">"n" to solve for:</span>
-            <input class="numfield" type="text" name="n" placeholder = "8">
-          </label>
-          <label>
-            <span class="numWorkers-label"># of webworkers to use:</span>
-            <input class="numfield" type="text" name="numWorkers" placeholder = "8">
-          </label>
-          <label>
-            <span>&nbsp;</span>
-            <input type="button" class="button" value="Go">
-          </label>
-        </form>
+    <div class="all-container clearfix">
+      <div class="info">
+        <div class="form">
+          <form class="userInput">
+            <label>
+              <span class="n-label">"n" to solve for:</span>
+              <input class="numfield n-field" type="text" name="n" value = "8">
+            </label>
+            <label>
+              <span class="numWorkers-label"># of webworkers to use:</span>
+              <input class="numfield numWorkers-field" type="text" name="numWorkers" placeholder = "8">
+            </label>
+            <label>
+              <span>&nbsp;</span>
+              <input type="button" class="button" value="Go">
+            </label>
+          </form>
+        </div>
+        <div class="results">
+          <h3>Results:</h3>
+        </div>
       </div>
-    </section>
-    <section class="workers">
-    </section>
-    <section class="results">
-      <div class="results">
-        <h3>Results:</h3>
+      <div class="workers">
+        <div class="worker-container">
+        </div>
       </div>
-    </section>
+    </div>
   </body>
 </html>

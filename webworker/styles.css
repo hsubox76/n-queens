@@ -1,4 +1,18 @@
 @charset "utf-8";
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+ 
+.clearfix:after {
+  clear: both;
+}
+ 
+.clearfix {
+  zoom: 1; /* ie 6/7 */
+}
+
 
 body {
   font: 20px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -11,8 +25,31 @@ h1 {
 }
 div {
   margin: 5px;
-  font-size: 0.8em;
+  font-size: 16px;
   font-weight: 200;
+}
+section {
+  display: block;
+  position: relative;
+}
+div.all-container {
+  position: relative;
+  width: 550px;
+  height: 270px;
+  background-color: #666;
+}
+div.info {
+  float: left;
+  position: relative;
+  background-color: #999;
+}
+div.workers {
+  float: left;
+  position: relative;
+  background-color: #cfc;
+}
+div.worker {
+  background-color: #ccc;
 }
 form {
   clear: both;
