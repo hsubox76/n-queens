@@ -34,9 +34,9 @@ section {
 }
 div.all-container {
   position: relative;
-  width: 550px;
+  width: 600px;
   height: 270px;
-  background-color: #666;
+  /*background-color: #666;*/
 }
 div.info {
   float: left;
@@ -46,10 +46,13 @@ div.info {
 div.workers {
   float: left;
   position: relative;
-  background-color: #cfc;
+  /*background-color: #cfc; */
 }
 div.worker {
-  background-color: #ccc;
+  border: 2px solid gray;
+  padding: 2px 5px;
+  margin: 5px;
+  /*background-color: #ccc; */
 }
 form {
   clear: both;
@@ -86,5 +89,36 @@ div.results h3 {
   margin-top: 10px;
   margin-left: 10px;
   font-size: 1em;
-  font-weight: 200;
+  font-weight: 400;
+}
+div.worker {
+  width: 220px;
+}
+div.worker-text {
+  font-size: 14px;
+}
+div.worker-bar-container {
+  font-size: 12px;
+  width: 200px;
+  height: 15px;
+  border: 2px solid gray;
+  border-radius: 5px;
+  position: relative;
+}
+span.worker-bar-text {
+  position: absolute;
+  top: 1px;
+  left: 40%;
+  padding-bottom: 2px;
+  font-size: 12px;
+  height: 70%;
+  width: 40px;
+  text-align: center;
+  background-color: #cef;
+}
+span.worker-bar {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background-color: #acf;
 }
