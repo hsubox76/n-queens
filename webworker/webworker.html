@@ -10,9 +10,23 @@
   </head>
   <body>
     <header>
+
       <h1>n-Queens Solution Through Web Worker Distribution</h1>
     </header>
+
     <div class="all-container clearfix">
+      <div class = "intro">
+
+        <div class="intro">The n-Queens problem is a popular math puzzle where the goal is to determine how many different configurations of
+        <em>n</em> queens can be placed on an <em>n x n</em> chessboard such that none of the queens can attack each other.</div>
+
+        <div class="intro">Calculating the solution starts to take a lot of processing power at a certain n (about 13 on my Macbook Pro).
+        A good way to speed it up is to split up the processing tasks among multiple processors.  We do that here with HTML5
+        web workers.  Each web worker spins off a separate process and uses a different core, if available, which makes the task more efficient as long as you don't have more web workers than cores.</div>
+
+        <div class="intro">I think the originating process takes up a core too, so you should see improvement up until the number of
+        web workers is equal to the number of cores you have minus 1.</div>
+      </div>
       <div class="info">
         <div class="form">
           <form class="userInput">
@@ -26,7 +40,7 @@
             </label>
             <label>
               <span>&nbsp;</span>
-              <input type="button" class="button" value="Go">
+              <span class="button">Go</span>
             </label>
           </form>
         </div>

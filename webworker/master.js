@@ -1,40 +1,40 @@
-// var myWorker = new Worker("worker.js");
-
-// myWorker.postMessage([1,2]);
-// console.log('Message posted to worker');
-
-// myWorker.onmessage = function(e) {
-//   console.log(e.data);
-//   console.log('Message received from worker');
-// }
-
-var workers;
-var n;
-var total;
-var exitedWorkers;
-var startTime;
-var numWorkers;
-var nextColInQueue = 0;
+var workers; // array holding workers
+var n; // n - from user
+var numWorkers; // number of workers - from user
+var total = 0; // total solutions found
+var nextColInQueue = 0; // keep track of next job to be run
+var jobsDone = 0; // keep track of how many jobs done
+var startTime; // for performance testing
 
 var processWorkerMessage = function (e) {
   retObj = e.data;
   
   var workerNumber = this._workerPlaceInArray;
+  var currentWorker = workers[workerNumber];
   var workerPercent = retObj.percentage;
 
   var percentString = Math.round(workerPercent) + "%";
-  workers[workerNumber].$bar_text.html(percentString);
-  var animationSpeed = (n-8)*20 + 20;
-  workers[workerNumber].$bar.animate({width: percentString}, animationSpeed);
+  currentWorker.$bar_text.html(percentString);
+  var animationSpeed = 0;
+  currentWorker.$bar.animate({width: percentString}, animationSpeed);
 
+  // if worker is done with current job (starting column)
   if ("total" in retObj) {
     total += retObj.total;
-    workers[workerNumber].$text.html('Worker ' + workerNumber + ' found: ' + retObj.total + ' solutions!');
-    workers[workerNumber].terminate();
-    exitedWorkers++;
-  }
+    currentWorker.solutions += retObj.total;
+    currentWorker.jobsRun++;
+    jobsDone++;
+    currentWorker.$text.html('Worker ' + workerNumber + ' ran ' + currentWorker.jobsRun + ' jobs, found ' + currentWorker.solutions + ' solutions!');
+    // if another job in the queue
+    if (nextColInQueue < n) {
+      currentWorker.postMessage({startingCol: nextColInQueue, n: n});
+      currentWorker.onmessage = processWorkerMessage;
+      nextColInQueue++;
+    } else {
+      currentWorker.terminate();
 
-  if(exitedWorkers === numWorkers) {
+    }
+  }  if(jobsDone === n) {
     var endTime = performance.now();
     var totalTime = (endTime - startTime);
     $('h3').html('Results for n = ' + n + ':');
@@ -44,20 +44,28 @@ var processWorkerMessage = function (e) {
   }
 };
 
+// Runs when "go" button clicked
 var main = function() {
   workers = [];
+  // get n from html form
   n = +$('.n-field').val();
+  // get number of workers from html form
   numWorkers = +$('.numWorkers-field').val();
+  // reset all global vars to 0
   total = 0;
-  exitedWorkers = 0;
-  console.log('test');
+  nextColInQueue = 0;
+  jobsDone = 0;
+  // reset html
   $('h3').html('Results:');
   $('.worker-container').html('');
   for(var i = 0; i < numWorkers; i++) {
     startTime = performance.now();
     workers.push(new Worker('worker.js'));
+    workers[i].solutions = 0;
+    workers[i].jobsRun = 0;
     workers[i]._workerPlaceInArray = i;
-    workers[i].postMessage({startingCol: i, n: n});
+    workers[i].postMessage({startingCol: nextColInQueue, n: n});
+    nextColInQueue++;
     workers[i].onmessage = processWorkerMessage;
     workers[i].$node = $('<div class="worker"></div>');
     workers[i].$text = $('<div class="worker-text">Worker ' + i + ' progress:</div>');
@@ -74,7 +82,7 @@ var main = function() {
 }
 
 
-
+// Go button event handler
 $(document).ready( function () {
   $('.button').on('click', main);
 });

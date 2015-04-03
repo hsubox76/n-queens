@@ -8,12 +8,6 @@ onmessage = function(e) {
   self.blockedCols = {};
 
   addQueen(0,n,start);
-
-  //console.log(self.solutionBoard.rows());
-  // console.log('Message received from main script');
-  // var workerResult = 'Result: ' + (e.data[0] * e.data[1]);
-  // console.log('Posting message back to main script');
-  
 }
 
 
